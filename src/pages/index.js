@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+// import { Link } from "gatsby"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
@@ -22,6 +22,7 @@ const IndexPage = () => (
         center: "title",
         right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
       }}
+      dateClick = {(e)=> {alert(`You clicked ${e.dateStr}`)}}
       plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
     />
     {/* <Link to="/page-2/">Go to page 2</Link> */}
