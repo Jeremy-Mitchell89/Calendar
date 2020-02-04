@@ -1,32 +1,67 @@
 import React from "react"
 // import { Link } from "gatsby"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
+import { navigate } from "@reach/router"
+import { graphql } from "gatsby"
+import Links from "../components/Links"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-
 import "@fullcalendar/core/main.css"
 import "@fullcalendar/daygrid/main.css"
 import "@fullcalendar/timegrid/main.css"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <FullCalendar
-      className="demo-app-calendar"
-      defaultView="dayGridMonth"
-      header={{
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
-      }}
-      dateClick = {(e)=> {alert(`You clicked ${e.dateStr}`)}}
-      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-    />
-    {/* <Link to="/page-2/">Go to page 2</Link> */}
-  </Layout>
-)
+const IndexPage = ({ data }) => {
+  let createPostArray = []
+  data.allMarkdownRemark.edges.map(post => {
+    createPostArray.push({
+      title: post.node.frontmatter.description,
+      date: post.node.frontmatter.date,
+    })
+  })
+  console.log(createPostArray)
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <FullCalendar
+        className="demo-app-calendar"
+        defaultView="dayGridMonth"
+        header={{
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+        }}
+        events={createPostArray}
+        dateClick={e => {
+          navigate(`../${e.dateStr}`)
+          // alert(`You clicked ${e.dateStr}`)
+        }}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+      />
+      {/* <Link to="/page-2/">Go to page 2</Link> */}
+      <Links posts={data.allMarkdownRemark.edges} />
+    </Layout>
+  )
+}
+
+export const pageQuery = graphql`
+  query IndexQuery {
+    allMarkdownRemark {
+      edges {
+        node {
+          id
+          frontmatter {
+            path
+            title
+            date
+            description
+          }
+        }
+      }
+    }
+  }
+`
 
 export default IndexPage
