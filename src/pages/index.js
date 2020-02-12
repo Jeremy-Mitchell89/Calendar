@@ -4,6 +4,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { navigate } from "@reach/router"
 import { graphql } from "gatsby"
+import { format } from "date-fns"
 import Links from "../components/Links"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
@@ -34,9 +35,10 @@ const IndexPage = ({ data }) => {
           right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
         }}
         events={createPostArray}
-        dateClick={e => {
-          navigate(`../${e.dateStr}`)
-          // alert(`You clicked ${e.dateStr}`)
+        eventClick={e => {
+          console.log(format(e.event.start, "yyyy-MM-dd"))
+          navigate(`../${format(e.event.start, "yyyy-MM-dd")}`)
+          // alert(`You clicked ${e.event.date}`)
         }}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
       />

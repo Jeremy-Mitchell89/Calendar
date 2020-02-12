@@ -10,6 +10,7 @@
     "@fullcalendar/interaction": "^4.3.0",
     "@fullcalendar/react": "^4.3.0",
     "@fullcalendar/timegrid": "^4.3.0",
+    "date-fns": "^2.9.0",
     "gatsby": "^2.18.12",
     "gatsby-image": "^2.2.34",
     "gatsby-plugin-manifest": "^2.2.31",
