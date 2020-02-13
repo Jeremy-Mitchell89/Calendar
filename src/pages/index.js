@@ -38,7 +38,6 @@ const IndexPage = ({ data }) => {
         eventClick={e => {
           console.log(format(e.event.start, "yyyy-MM-dd"))
           navigate(`../${format(e.event.start, "yyyy-MM-dd")}`)
-          // alert(`You clicked ${e.event.date}`)
         }}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
       />
