@@ -15,14 +15,14 @@ import "@fullcalendar/daygrid/main.css"
 import "@fullcalendar/timegrid/main.css"
 
 const IndexPage = ({ data }) => {
-  let createPostArray = []
+  const postArray = []
   data.allMarkdownRemark.edges.map(post => {
-    createPostArray.push({
+    postArray.push({
       title: post.node.frontmatter.description,
       date: post.node.frontmatter.date,
     })
+    return postArray
   })
-  console.log(createPostArray)
   return (
     <Layout>
       <SEO title="Home" />
@@ -34,9 +34,8 @@ const IndexPage = ({ data }) => {
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
         }}
-        events={createPostArray}
+        events={postArray}
         eventClick={e => {
-          console.log(format(e.event.start, "yyyy-MM-dd"))
           navigate(`../${format(e.event.start, "yyyy-MM-dd")}`)
         }}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
